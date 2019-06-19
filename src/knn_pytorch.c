@@ -40,3 +40,7 @@ int knn(THCudaTensor *ref_tensor, THCudaTensor *query_tensor,
 
   return 1;
 }
+
+int main(){
+  return 0;
+}

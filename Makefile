@@ -9,13 +9,13 @@ NVCC_FLAGS := -x cu -Xcompiler -fPIC -shared
 # File structure.
 BUILD_DIR := build
 INCLUDE_DIRS := src
-TORCH_FFI_BUILD := build_ffi.py
+TORCH_FFI_BUILD := setup.py
 KNN_KERNEL := $(BUILD_DIR)/knn_cuda_kernel.so
 TORCH_FFI_TARGET := $(BUILD_DIR)/knn_pytorch/_knn_pytorch.so
 
 INCLUDE_FLAGS := $(foreach d, $(INCLUDE_DIRS), -I$d)
 
-DEBUB := 0
+DEBUG := 0
 
 # Debugging
 ifeq ($(DEBUG), 1)
@@ -28,7 +28,7 @@ endif
 all: $(TORCH_FFI_TARGET)
 
 $(TORCH_FFI_TARGET): $(KNN_KERNEL) $(TORCH_FFI_BUILD)
-	$(PYTHON) $(TORCH_FFI_BUILD)
+	CC=g++ $(PYTHON) $(TORCH_FFI_BUILD) install
 
 $(BUILD_DIR)/%.so: src/%.cu
 	@ mkdir -p $(BUILD_DIR)
